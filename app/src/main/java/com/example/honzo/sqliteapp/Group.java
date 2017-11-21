@@ -5,4 +5,14 @@ package com.example.honzo.sqliteapp;
  */
 
 public class Group {
+    private int _id;
+    private String _name;
+
+    public Group(String name) {
+        this._name = name;
+    }
+
+    public String toString() {
+        return "grupa: " + _name;
+    }
 }
