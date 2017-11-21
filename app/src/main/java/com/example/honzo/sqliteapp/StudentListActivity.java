@@ -32,10 +32,10 @@ public class StudentListActivity extends AppCompatActivity {
     }
 
     private void fillTheList() {
-        studentList.add(new Student("Konrad", "Bysiek"));
-        studentList.add(new Student("Agata", "Czerwinska"));
-        studentList.add(new Student("Dorian", "Cekani"));
-        studentList.add(new Student("Vladek", "Czebotarew"));
+        studentList.add(new Student(1, "Konrad", "Bysiek"));
+        studentList.add(new Student(2, "Agata", "Czerwinska"));
+        studentList.add(new Student(3, "Dorian", "Cekani"));
+        studentList.add(new Student(4, "Vladek", "Czebotarew"));
     }
 
     private void setListItemListener(){

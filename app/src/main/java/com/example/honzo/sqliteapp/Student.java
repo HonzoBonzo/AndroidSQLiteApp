@@ -13,7 +13,8 @@ public class Student {
     private ArrayList<Group> groups = new ArrayList<Group>();
 
 
-    public Student(String name, String lastName) {
+    public Student(int id, String name, String lastName) {
+        this._id = id;
         this._name = name;
         this._lastName = lastName;
     }
