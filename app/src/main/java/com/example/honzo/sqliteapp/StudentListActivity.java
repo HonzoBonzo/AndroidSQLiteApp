@@ -13,9 +13,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class StudentListActivity extends AppCompatActivity {
-
-    private ArrayList<String> arrayList = new ArrayList<String>(5);
-    private ArrayList<Student> studentList = new ArrayList<Student>(5);
+    private ArrayList<Student> studentList = new ArrayList<>();
     private ArrayAdapter<Student> adapter;
     private ListView list;
 
@@ -25,7 +23,7 @@ public class StudentListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_student_list);
         list = (ListView) findViewById(R.id.studentList);
 
-        adapter = new ArrayAdapter<Student>(this, android.R.layout.select_dialog_item, studentList);
+        adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, studentList);
         list.setAdapter(adapter);
 
         this.fillTheList();
