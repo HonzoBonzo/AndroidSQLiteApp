@@ -1,5 +1,6 @@
 package com.example.honzo.sqliteapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class StudentListActivity extends AppCompatActivity {
@@ -45,6 +47,10 @@ public class StudentListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Student st = (Student) parent.getItemAtPosition(position);
                         Toast.makeText(StudentListActivity.this, st.toString(), Toast.LENGTH_SHORT).show();
+
+                        Intent i = new Intent(StudentListActivity.this, StudentGroupsActivity.class);
+                        i.putExtra("studentFullName", st.toString());
+                        startActivity(i);
                     }
                 }
         );

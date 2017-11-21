@@ -5,21 +5,23 @@ package com.example.honzo.sqliteapp;
  */
 
 public class Student {
-    private String name;
-    private String lastName;
+    private int _id;
+    private String _name;
+    private String _lastName;
 
 
     public Student(String name, String lastName) {
-        this.name = name;
-        this.lastName = lastName;
+        this._name = name;
+        this._lastName = lastName;
     }
 
     public Student() {
-        this.name = "";
-        this.lastName = "";
+        this._id = 0;
+        this._name = "";
+        this._lastName = "";
     }
 
     public String toString() {
-        return name + ' ' + lastName + ":)";
+        return _name + ' ' + _lastName + " (" + _id +")";
     }
 }
