@@ -16,6 +16,7 @@ public class StudentListActivity extends AppCompatActivity {
     private ArrayList<Student> studentList = new ArrayList<>();
     private ArrayAdapter<Student> adapter;
     private ListView list;
+    private MyOpenHelper openHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +33,12 @@ public class StudentListActivity extends AppCompatActivity {
     }
 
     private void fillTheList() {
-        studentList.add(new Student(1, "Konrad", "Bysiek"));
-        studentList.add(new Student(2, "Agata", "Czerwinska"));
-        studentList.add(new Student(3, "Dorian", "Cekani"));
-        studentList.add(new Student(4, "Vladek", "Czebotarew"));
+        openHelper = new MyOpenHelper(this);
+//        studentList = openHelper.getStudents();
+        studentList.add(new Student(121233, "Konrad", "Bysiek"));
+        studentList.add(new Student(221233, "Agata", "Czerwinska"));
+        studentList.add(new Student(3112323, "Dorian", "Cekani"));
+        studentList.add(new Student(1212334, "Vladek", "Czebotarew"));
     }
 
     private void setListItemListener(){
