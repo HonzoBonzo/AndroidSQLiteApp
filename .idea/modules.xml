@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SqliteApp.iml" filepath="$PROJECT_DIR$/SqliteApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Byskuu.iml" filepath="$PROJECT_DIR$/Byskuu.iml" />
+      <module fileurl="file://C:\Users\mjbor\AndroidStudioProjects\Byskuu\SqliteApp.iml" filepath="C:\Users\mjbor\AndroidStudioProjects\Byskuu\SqliteApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\mjbor\AndroidStudioProjects\Byskuu\app\app.iml" filepath="C:\Users\mjbor\AndroidStudioProjects\Byskuu\app\app.iml" />
     </modules>
   </component>
 </project>

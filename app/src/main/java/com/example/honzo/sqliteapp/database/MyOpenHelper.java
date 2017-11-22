@@ -1,4 +1,4 @@
-package com.example.honzo.sqliteapp;
+package com.example.honzo.sqliteapp.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.ArrayAdapter;
+
+import com.example.honzo.sqliteapp.Student;
 
 import java.util.ArrayList;
 
@@ -21,13 +23,14 @@ public class MyOpenHelper extends SQLiteOpenHelper {
     public static final String STUDENT_GROUP_TABLE = "student_group";
     SQLiteDatabase db;
 
-    public MyOpenHelper(Context context){
+    public MyOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        db = getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        this.db = db;
+
         String queryCreateStudentTable = "CREATE TABLE " + STUDENT_TABLE + "(" +
                 "student_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "student_name TEXT, " +
@@ -66,29 +69,7 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public ArrayList<Student> getStudents() {
-        ArrayList<Student> students = new ArrayList<>();
-        String query = "SELECT * FROM " + STUDENT_TABLE + ";";
 
-        Cursor c = db.rawQuery(query, null);
-        c.moveToFirst();
-
-        while(!c.isAfterLast()) {
-            int id = c.getInt(c.getColumnIndex("student_id"));
-            String name = c.getString(c.getColumnIndex("student_name"));
-            String lastName = c.getString(c.getColumnIndex("student_lastName"));
-
-            students.add(new Student(id, name, lastName));
-            c.moveToNext();
-        }
-
-        students.add(new Student(121233, "Konrad", "Bysiek"));
-        students.add(new Student(221233, "Agata", "Czerwinska"));
-        students.add(new Student(3112323, "Dorian", "Cekani"));
-        students.add(new Student(1212334, "Vladek", "Czebotarew"));
-
-        return students;
-    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {

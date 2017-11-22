@@ -1,6 +1,7 @@
 package com.example.honzo.sqliteapp;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,32 +10,40 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.Serializable;
+import com.example.honzo.sqliteapp.database.DbInteractor;
+import com.example.honzo.sqliteapp.database.MyOpenHelper;
+
 import java.util.ArrayList;
 
 public class StudentListActivity extends AppCompatActivity {
     private ArrayList<Student> studentList = new ArrayList<>();
     private ArrayAdapter<Student> adapter;
     private ListView list;
-    private MyOpenHelper openHelper;
+    private DbInteractor dbInteractor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_list);
-        openHelper = new MyOpenHelper(this);
+        dbInteractor = new DbInteractor(this);
+
+
+
         list = (ListView) findViewById(R.id.studentList);
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, studentList);
-        list.setAdapter(adapter);
+
 
         this.fillTheList();
         this.setListItemListener();
 
+        adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, studentList);
+        list.setAdapter(adapter);
+
     }
 
     private void fillTheList() {
-        studentList = openHelper.getStudents();
+
+        studentList = dbInteractor.getStudents();
     }
 
     private void setListItemListener(){
