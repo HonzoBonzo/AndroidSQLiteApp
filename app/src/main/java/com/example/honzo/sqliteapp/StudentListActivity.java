@@ -27,11 +27,7 @@ public class StudentListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_student_list);
         dbInteractor = new DbInteractor(this);
 
-
-
         list = (ListView) findViewById(R.id.studentList);
-
-
 
         this.fillTheList();
         this.setListItemListener();
@@ -42,7 +38,6 @@ public class StudentListActivity extends AppCompatActivity {
     }
 
     private void fillTheList() {
-
         studentList = dbInteractor.getStudents();
     }
 

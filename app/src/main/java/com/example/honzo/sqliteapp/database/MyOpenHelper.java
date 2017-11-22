@@ -53,6 +53,7 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         insertStudent("Agata", "Czerwinska");
         insertStudent("Dorian", "Cekani");
         insertStudent("Vladek", "Czebotarew");
+        insertStudent("Michal", "Pazdan");
     }
 
 

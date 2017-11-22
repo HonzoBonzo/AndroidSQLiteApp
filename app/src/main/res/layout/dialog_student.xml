@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:padding="25sp">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/student_text"
+        android:layout_gravity="center"
+        android:layout_marginTop="25sp"
+        android:textSize="25sp"
+        android:layout_weight="0.05" />
+
+    <EditText
+        android:layout_marginTop="25sp"
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:ems="10"
+        android:hint="@string/name_hint"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:ems="10"
+        android:hint="@string/lastname_hint"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:layout_marginTop="25sp"
+        android:id="@+id/add_student_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:text="@string/add_btn_label" />
+</LinearLayout>

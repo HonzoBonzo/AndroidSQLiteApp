@@ -9,10 +9,6 @@ import com.example.honzo.sqliteapp.Student;
 
 import java.util.ArrayList;
 
-/**
- * Created by mjbor on 11/22/2017.
- */
-
 public class DbInteractor {
 
     private SQLiteDatabase db;
@@ -36,18 +32,13 @@ public class DbInteractor {
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
 
-        while(c.moveToNext()) {
+        do {
             int id = c.getInt(c.getColumnIndex("student_id"));
             String name = c.getString(c.getColumnIndex("student_name"));
             String lastName = c.getString(c.getColumnIndex("student_lastName"));
 
             students.add(new Student(id, name, lastName));
-        }
-
-/*        students.add(new Student(121233, "Konrad", "Bysiek"));
-        students.add(new Student(221233, "Agata", "Czerwinska"));
-        students.add(new Student(3112323, "Dorian", "Cekani"));
-        students.add(new Student(1212334, "Vladek", "Czebotarew"));*/
+        } while (c.moveToNext());
 
         return students;
     }
