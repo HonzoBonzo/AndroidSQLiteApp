@@ -22,6 +22,7 @@ public class StudentListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_list);
+        openHelper = new MyOpenHelper(this);
         list = (ListView) findViewById(R.id.studentList);
 
         adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, studentList);
@@ -33,12 +34,7 @@ public class StudentListActivity extends AppCompatActivity {
     }
 
     private void fillTheList() {
-        openHelper = new MyOpenHelper(this);
-//        studentList = openHelper.getStudents();
-        studentList.add(new Student(121233, "Konrad", "Bysiek"));
-        studentList.add(new Student(221233, "Agata", "Czerwinska"));
-        studentList.add(new Student(3112323, "Dorian", "Cekani"));
-        studentList.add(new Student(1212334, "Vladek", "Czebotarew"));
+        studentList = openHelper.getStudents();
     }
 
     private void setListItemListener(){

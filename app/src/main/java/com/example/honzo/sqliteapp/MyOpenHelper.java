@@ -14,14 +14,16 @@ import java.util.ArrayList;
  */
 
 public class MyOpenHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "sqliteapp.db";
     public static final String STUDENT_TABLE = "student";
     public static final String GROUP_TABLE = "grouptbl";
     public static final String STUDENT_GROUP_TABLE = "student_group";
+    SQLiteDatabase db;
 
     public MyOpenHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        db = getWritableDatabase();
     }
 
     @Override
@@ -44,32 +46,29 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         db.execSQL(queryCreateGroupTable);
         db.execSQL(queryCreateStudentGroupTable);
 
-        insertStudent(new Student(1, "Konrad", "Bysiek"));
-        insertStudent(new Student(2, "Agata", "Czerwinska"));
-        insertStudent(new Student(3, "Dorian", "Cekani"));
-        insertStudent(new Student(4, "Vladek", "Czebotarew"));
+        insertStudent("Konrad", "Bysiek");
+        insertStudent("Agata", "Czerwinska");
+        insertStudent("Dorian", "Cekani");
+        insertStudent("Vladek", "Czebotarew");
     }
 
-    public void insertStudent(Student student) {
+
+    public void insertStudent(String studentName, String studentLastName) {
         ContentValues values = new ContentValues();
-        values.put("student_name", student.get_name());
-        values.put("student_lastName", student.get_lastName());
-        SQLiteDatabase db = getWritableDatabase();
+        values.put("student_name", studentName);
+        values.put("student_lastName", studentLastName);
         db.insert(STUDENT_TABLE, null, values);
-        db.close();
     }
 
-    public void deleteStudent(Student student) {
-        String query = "DELETE FROM " + STUDENT_TABLE + " WHERE student_id = " + student.get_id() + ";";
+    public void deleteStudent(int studentId) {
+        String query = "DELETE FROM " + STUDENT_TABLE + " WHERE student_id = " + studentId + ";";
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(query);
-        db.close();
     }
 
     public ArrayList<Student> getStudents() {
         ArrayList<Student> students = new ArrayList<>();
         String query = "SELECT * FROM " + STUDENT_TABLE + ";";
-        SQLiteDatabase db = getWritableDatabase();
 
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
@@ -80,9 +79,14 @@ public class MyOpenHelper extends SQLiteOpenHelper {
             String lastName = c.getString(c.getColumnIndex("student_lastName"));
 
             students.add(new Student(id, name, lastName));
+            c.moveToNext();
         }
 
-        db.close();
+        students.add(new Student(121233, "Konrad", "Bysiek"));
+        students.add(new Student(221233, "Agata", "Czerwinska"));
+        students.add(new Student(3112323, "Dorian", "Cekani"));
+        students.add(new Student(1212334, "Vladek", "Czebotarew"));
+
         return students;
     }
 
