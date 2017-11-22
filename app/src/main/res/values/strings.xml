@@ -9,5 +9,8 @@
     <string name="remove_student_btn">Yes</string>
     <string name="remove_student_label">Do you want to remove student?</string>
     <string name="student_removed_info">Student has been removed.</string>
+    <string name="add_group_btn_label">Add group</string>
+    <string name="add_group_btn_confirm">Add</string>
+    <string name="group_name_hint">group name</string>
 
 </resources>
