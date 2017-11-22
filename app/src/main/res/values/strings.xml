@@ -4,5 +4,6 @@
     <string name="lastname_hint">Lastname</string>
     <string name="add_btn_label">Add student</string>
     <string name="student_text">Student</string>
+    <string name="new_student_added_info">Student has been added.</string>
 
 </resources>

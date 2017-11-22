@@ -19,6 +19,7 @@
 
     <Button
         android:id="@+id/button2"
+        android:onClick="openNewStudentDialog"
         android:layout_width="193dp"
         android:layout_height="56dp"
         android:text="@string/add_btn_label"

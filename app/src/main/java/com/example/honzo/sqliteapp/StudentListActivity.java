@@ -2,11 +2,14 @@ package com.example.honzo.sqliteapp;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -41,7 +44,7 @@ public class StudentListActivity extends AppCompatActivity {
         studentList = dbInteractor.getStudents();
     }
 
-    private void setListItemListener(){
+    private void setListItemListener() {
         list.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
@@ -55,5 +58,27 @@ public class StudentListActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    public void openNewStudentDialog(View view) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(StudentListActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_student, null);
+        final EditText mName = (EditText) mView.findViewById(R.id.student_name);
+        final EditText mLastname = (EditText) mView.findViewById(R.id.student_lastname);
+        Button mAddBtn = (Button) mView.findViewById(R.id.add_student_button);
+
+        mAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(StudentListActivity.this, R.string.new_student_added_info, Toast.LENGTH_SHORT).show();
+                mName.setText("");
+                mLastname.setText("");
+            }
+        });
+
+        mBuilder.setView(mView);
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
+
     }
 }
