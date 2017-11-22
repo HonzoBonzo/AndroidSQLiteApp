@@ -1,5 +1,6 @@
 package com.example.honzo.sqliteapp.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -41,6 +42,13 @@ public class DbInteractor {
         } while (c.moveToNext());
 
         return students;
+    }
+
+    public void insertStudent(String studentName, String studentLastName) {
+        ContentValues values = new ContentValues();
+        values.put("student_name", studentName);
+        values.put("student_lastName", studentLastName);
+        db.insert(STUDENT_TABLE, null, values);
     }
 
 }

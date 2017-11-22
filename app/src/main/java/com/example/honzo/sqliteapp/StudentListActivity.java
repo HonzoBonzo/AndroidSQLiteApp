@@ -17,6 +17,7 @@ import com.example.honzo.sqliteapp.database.DbInteractor;
 import com.example.honzo.sqliteapp.database.MyOpenHelper;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class StudentListActivity extends AppCompatActivity {
     private ArrayList<Student> studentList = new ArrayList<>();
@@ -58,6 +59,7 @@ public class StudentListActivity extends AppCompatActivity {
                     }
                 }
         );
+        
     }
 
     public void openNewStudentDialog(View view) {
@@ -70,9 +72,14 @@ public class StudentListActivity extends AppCompatActivity {
         mAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(StudentListActivity.this, R.string.new_student_added_info, Toast.LENGTH_SHORT).show();
-                mName.setText("");
-                mLastname.setText("");
+                if (!Objects.equals(mName.getText().toString(), "") && !Objects.equals(mLastname.getText().toString(), "")) {
+                    dbInteractor.insertStudent(mName.getText().toString(), mLastname.getText().toString());
+                    Toast.makeText(StudentListActivity.this, R.string.new_student_added_info, Toast.LENGTH_SHORT).show();
+                    mName.setText("");
+                    mLastname.setText("");
+                } else {
+                    Toast.makeText(StudentListActivity.this, R.string.student_data_not_full, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
