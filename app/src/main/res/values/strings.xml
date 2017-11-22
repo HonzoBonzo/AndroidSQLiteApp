@@ -6,5 +6,8 @@
     <string name="student_text">Student</string>
     <string name="new_student_added_info">Student has been added.</string>
     <string name="student_data_not_full">Write name and lastname</string>
+    <string name="remove_student_btn">Yes</string>
+    <string name="remove_student_label">Do you want to remove student?</string>
+    <string name="student_removed_info">Student has been removed.</string>
 
 </resources>
