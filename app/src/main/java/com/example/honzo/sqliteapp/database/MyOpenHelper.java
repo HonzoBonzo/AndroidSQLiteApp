@@ -64,14 +64,6 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         db.insert(STUDENT_TABLE, null, values);
     }
 
-    public void deleteStudent(int studentId) {
-        String query = "DELETE FROM " + STUDENT_TABLE + " WHERE student_id = " + studentId + ";";
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL(query);
-    }
-
-
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS " + STUDENT_TABLE + ";");

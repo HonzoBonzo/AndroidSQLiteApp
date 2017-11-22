@@ -51,4 +51,9 @@ public class DbInteractor {
         db.insert(STUDENT_TABLE, null, values);
     }
 
+    public void deleteStudent(int studentId) {
+        String query = "DELETE FROM " + STUDENT_TABLE + " WHERE student_id = " + studentId + ";";
+        db.execSQL(query);
+    }
+
 }

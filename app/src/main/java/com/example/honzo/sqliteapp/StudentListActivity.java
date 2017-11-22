@@ -64,22 +64,24 @@ public class StudentListActivity extends AppCompatActivity {
 
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View arg1, int position, long id) {
-                Toast.makeText(StudentListActivity.this, "long clicked, pos: " + position, Toast.LENGTH_LONG).show();
-                Student st = (Student) parent.getItemAtPosition(position);
+                final Student st = (Student) parent.getItemAtPosition(position);
+                Toast.makeText(StudentListActivity.this, st.toString(), Toast.LENGTH_LONG).show();
 
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(StudentListActivity.this);
                 View mView = getLayoutInflater().inflate(R.layout.dialog_student_remove_confirm, null);
-                Button mAddBtn = (Button) mView.findViewById(R.id.remove_student_button);
+                Button mAddBtn = mView.findViewById(R.id.remove_student_button);
 
+                mBuilder.setView(mView);
+                final AlertDialog dialog = mBuilder.create();
                 mAddBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                            Toast.makeText(StudentListActivity.this, R.string.student_removed_info, Toast.LENGTH_SHORT).show();
+                        dbInteractor.deleteStudent(st.get_id());
+                        Toast.makeText(StudentListActivity.this, R.string.student_removed_info, Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
                 });
 
-                mBuilder.setView(mView);
-                AlertDialog dialog = mBuilder.create();
                 dialog.show();
 
                 return true;
@@ -90,9 +92,9 @@ public class StudentListActivity extends AppCompatActivity {
     public void openNewStudentDialog(View view) {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(StudentListActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.dialog_student, null);
-        final EditText mName = (EditText) mView.findViewById(R.id.student_name);
-        final EditText mLastname = (EditText) mView.findViewById(R.id.student_lastname);
-        Button mAddBtn = (Button) mView.findViewById(R.id.add_student_button);
+        final EditText mName = mView.findViewById(R.id.student_name);
+        final EditText mLastname = mView.findViewById(R.id.student_lastname);
+        Button mAddBtn = mView.findViewById(R.id.add_student_button);
 
         mAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
