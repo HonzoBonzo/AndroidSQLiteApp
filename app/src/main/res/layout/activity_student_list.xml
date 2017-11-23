@@ -8,8 +8,8 @@
 
     <ListView
         android:id="@+id/studentList"
-        android:layout_width="351dp"
-        android:layout_height="354dp"
+        android:layout_width="352dp"
+        android:layout_height="412dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"

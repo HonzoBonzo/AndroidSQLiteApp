@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.example.honzo.sqliteapp.database.DbInteractor;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class StudentGroupsActivity extends AppCompatActivity {
     Student student;
@@ -38,15 +40,16 @@ public class StudentGroupsActivity extends AppCompatActivity {
 
         list = (ListView) findViewById(R.id.groupsList);
         this.fillTheList();
-        setListItemListener();
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked, studentsGroups);
-        list.setAdapter(adapter);
 
     }
 
     private void fillTheList() {
         studentsGroups = dbInteractor.getGroups();
+        setListItemListener();
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked, studentsGroups);
+        list.setAdapter(adapter);
     }
 
     private void setListItemListener() {
@@ -78,6 +81,7 @@ public class StudentGroupsActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         dbInteractor.deleteGroup(group.get_id());
                         Toast.makeText(StudentGroupsActivity.this, "Group has been deleted.", Toast.LENGTH_SHORT).show();
+                        fillTheList();
                         dialog.dismiss();
                     }
                 });
@@ -87,5 +91,32 @@ public class StudentGroupsActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    public void openNewGroupDialog(View view) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(StudentGroupsActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_group_new, null);
+        final EditText mName = mView.findViewById(R.id.group_name);
+        Button mAddBtn = mView.findViewById(R.id.add_group_btn);
+
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+
+        mAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!Objects.equals(mName.getText().toString(), "")) {
+                    dbInteractor.insertGroup(mName.getText().toString());
+                    Toast.makeText(StudentGroupsActivity.this, "Group "+mName.getText().toString()+ " has been added.", Toast.LENGTH_SHORT).show();
+                    fillTheList();
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(StudentGroupsActivity.this, R.string.new_group_warn_empty, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        dialog.show();
+
     }
 }

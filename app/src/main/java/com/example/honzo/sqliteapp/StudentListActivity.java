@@ -33,16 +33,15 @@ public class StudentListActivity extends AppCompatActivity {
 
         list = (ListView) findViewById(R.id.studentList);
 
-        this.fillTheList();
-        this.setListItemListener();
-
-        adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, studentList);
-        list.setAdapter(adapter);
-
+        fillTheList();
     }
 
     private void fillTheList() {
         studentList = dbInteractor.getStudents();
+        this.setListItemListener();
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, studentList);
+        list.setAdapter(adapter);
     }
 
     private void setListItemListener() {
@@ -78,6 +77,7 @@ public class StudentListActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         dbInteractor.deleteStudent(st.get_id());
                         Toast.makeText(StudentListActivity.this, R.string.student_removed_info, Toast.LENGTH_SHORT).show();
+                        fillTheList();
                         dialog.dismiss();
                     }
                 });
@@ -104,6 +104,7 @@ public class StudentListActivity extends AppCompatActivity {
                     Toast.makeText(StudentListActivity.this, R.string.new_student_added_info, Toast.LENGTH_SHORT).show();
                     mName.setText("");
                     mLastname.setText("");
+                    fillTheList();
                 } else {
                     Toast.makeText(StudentListActivity.this, R.string.student_data_not_full, Toast.LENGTH_SHORT).show();
                 }
