@@ -25,13 +25,13 @@ public class StudentGroupsActivity extends AppCompatActivity {
     private ArrayList<Group> allGroups = new ArrayList<>();
     private ArrayList<Integer> studentGroups = new ArrayList<>();
     private ListView list;
-    private DbInteractor dbInteractor;
+    private DbManager dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_groups);
-        dbInteractor = new DbInteractor(this);
+        dbManager = new DbManager(this);
 
         studentName = getIntent().getStringExtra("studentFullName");
         studentId = getIntent().getIntExtra("studentId", 0);
@@ -47,8 +47,8 @@ public class StudentGroupsActivity extends AppCompatActivity {
     }
 
     private void fillTheList() {
-        allGroups = dbInteractor.getGroups();
-        studentGroups = dbInteractor.getStudentGroups(studentId);
+        allGroups = dbManager.getGroups();
+        studentGroups = dbManager.getStudentGroups(studentId);
         setListItemListener();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked, allGroups);
         list.setAdapter(adapter);
@@ -74,9 +74,9 @@ public class StudentGroupsActivity extends AppCompatActivity {
 
                     SparseBooleanArray checked = list.getCheckedItemPositions();
                     if (checked.get(position)) {
-                        dbInteractor.insertRelationStudentGroup(studentId, group.get_id());
+                        dbManager.insertRelationStudentGroup(studentId, group.get_id());
                     } else {
-                        dbInteractor.deleteRelationStudentGroup(studentId, group.get_id());
+                        dbManager.deleteRelationStudentGroup(studentId, group.get_id());
                     }
                 }
             }
@@ -98,7 +98,7 @@ public class StudentGroupsActivity extends AppCompatActivity {
                 mAddBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dbInteractor.deleteGroup(group.get_id());
+                        dbManager.deleteGroup(group.get_id());
                         Toast.makeText(StudentGroupsActivity.this, "Group has been deleted.", Toast.LENGTH_SHORT).show();
                         fillTheList();
                         dialog.dismiss();
@@ -125,7 +125,7 @@ public class StudentGroupsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!Objects.equals(mName.getText().toString(), "")) {
-                    dbInteractor.insertGroup(mName.getText().toString());
+                    dbManager.insertGroup(mName.getText().toString());
                     Toast.makeText(StudentGroupsActivity.this, "Group "+mName.getText().toString()+ " has been added.", Toast.LENGTH_SHORT).show();
                     fillTheList();
                     dialog.dismiss();

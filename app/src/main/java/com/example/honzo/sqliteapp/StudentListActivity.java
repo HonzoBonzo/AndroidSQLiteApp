@@ -19,13 +19,13 @@ public class StudentListActivity extends AppCompatActivity {
     private ArrayList<Student> studentList = new ArrayList<>();
     private ArrayAdapter<Student> adapter;
     private ListView list;
-    private DbInteractor dbInteractor;
+    private DbManager dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_list);
-        dbInteractor = new DbInteractor(this);
+        dbManager = new DbManager(this);
 
         list = (ListView) findViewById(R.id.studentList);
 
@@ -33,7 +33,7 @@ public class StudentListActivity extends AppCompatActivity {
     }
 
     private void fillTheList() {
-        studentList = dbInteractor.getStudents();
+        studentList = dbManager.getStudents();
         this.setListItemListener();
 
         adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, studentList);
@@ -72,7 +72,7 @@ public class StudentListActivity extends AppCompatActivity {
                 mAddBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dbInteractor.deleteStudent(st.get_id());
+                        dbManager.deleteStudent(st.get_id());
                         Toast.makeText(StudentListActivity.this, R.string.student_removed_info, Toast.LENGTH_SHORT).show();
                         fillTheList();
                         dialog.dismiss();
@@ -97,7 +97,7 @@ public class StudentListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!Objects.equals(mName.getText().toString(), "") && !Objects.equals(mLastname.getText().toString(), "")) {
-                    dbInteractor.insertStudent(mName.getText().toString(), mLastname.getText().toString());
+                    dbManager.insertStudent(mName.getText().toString(), mLastname.getText().toString());
                     Toast.makeText(StudentListActivity.this, R.string.new_student_added_info, Toast.LENGTH_SHORT).show();
                     mName.setText("");
                     mLastname.setText("");

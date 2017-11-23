@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-public class DbInteractor {
+public class DbManager {
 
     private SQLiteDatabase db;
     private Context context;
@@ -18,7 +18,7 @@ public class DbInteractor {
     public static final String GROUP_TABLE = "grouptbl";
     public static final String STUDENT_GROUP_TABLE = "student_group";
 
-    public DbInteractor(Context context){
+    public DbManager(Context context){
         this.context = context;
         SQLiteOpenHelper sqLiteOpenHelper = new MyOpenHelper(context);
         this.db = sqLiteOpenHelper.getWritableDatabase();
