@@ -1,4 +1,4 @@
-package com.example.honzo.sqliteapp.database;
+package com.example.honzo.sqliteapp;
 
 import android.content.ContentValues;
 import android.content.Context;

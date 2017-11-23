@@ -1,13 +1,10 @@
-package com.example.honzo.sqliteapp.database;
+package com.example.honzo.sqliteapp;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import com.example.honzo.sqliteapp.Group;
-import com.example.honzo.sqliteapp.Student;
 
 import java.util.ArrayList;
 
