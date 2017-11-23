@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:padding="25sp">
+
+    <TextView
+        android:id="@+id/group_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/do_you_want_to_remove_group"
+        android:layout_gravity="center"
+        android:layout_marginTop="25sp"
+        android:textSize="25sp"
+        android:layout_weight="0.05" />
+
+    <Button
+        android:layout_marginTop="25sp"
+        android:id="@+id/remove_group_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:text="@string/remove_group_confirm" />
+</LinearLayout>

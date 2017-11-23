@@ -54,6 +54,12 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         insertStudent("Dorian", "Cekani");
         insertStudent("Vladek", "Czebotarew");
         insertStudent("Michal", "Pazdan");
+
+        insertGroup("W 31");
+        insertGroup("L 01");
+        insertGroup("C 41");
+        insertGroup("P 41");
+        insertGroup("I 32");
     }
 
 
@@ -62,6 +68,12 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         values.put("student_name", studentName);
         values.put("student_lastName", studentLastName);
         db.insert(STUDENT_TABLE, null, values);
+    }
+
+    public void insertGroup(String groupName) {
+        ContentValues values = new ContentValues();
+        values.put("grouptbl_name", groupName);
+        db.insert(GROUP_TABLE, null, values);
     }
 
     @Override

@@ -12,5 +12,7 @@
     <string name="add_group_btn_label">Add group</string>
     <string name="add_group_btn_confirm">Add</string>
     <string name="group_name_hint">group name</string>
+    <string name="do_you_want_to_remove_group">Do you want to remove group?</string>
+    <string name="remove_group_confirm">Yes</string>
 
 </resources>

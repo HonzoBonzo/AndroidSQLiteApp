@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.honzo.sqliteapp.Group;
 import com.example.honzo.sqliteapp.Student;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class DbInteractor {
 
 
     public static final String STUDENT_TABLE = "student";
+    public static final String GROUP_TABLE = "grouptbl";
 
     public DbInteractor(Context context){
         this.context = context;
@@ -56,4 +58,30 @@ public class DbInteractor {
         db.execSQL(query);
     }
 
+    public ArrayList<Group> getGroups() {
+        ArrayList<Group> groups = new ArrayList<>();
+        String query = "SELECT * FROM " + GROUP_TABLE + ";";
+
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+
+        do {
+            int id = c.getInt(c.getColumnIndex("grouptbl_id"));
+            String name = c.getString(c.getColumnIndex("grouptbl_name"));
+            groups.add(new Group(id, name));
+        } while (c.moveToNext());
+
+        return groups;
+    }
+
+    public void insertGroup(String groupName) {
+        ContentValues values = new ContentValues();
+        values.put("grouptbl_name", groupName);
+        db.insert(GROUP_TABLE, null, values);
+    }
+
+    public void deleteGroup(int groupId) {
+        String query = "DELETE FROM " + GROUP_TABLE + " WHERE grouptbl_id = " + groupId + ";";
+        db.execSQL(query);
+    }
 }
