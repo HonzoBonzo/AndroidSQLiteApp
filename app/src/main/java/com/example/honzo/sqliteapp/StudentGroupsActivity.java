@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,14 +17,17 @@ import android.widget.Toast;
 import com.example.honzo.sqliteapp.database.DbInteractor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class StudentGroupsActivity extends AppCompatActivity {
     Student student;
     String studentName;
     TextView studentFullName;
+    int studentId;
     ArrayAdapter<Group> adapter;
-    private ArrayList<Group> studentsGroups = new ArrayList<>();
+    private ArrayList<Group> allGroups = new ArrayList<>();
+    private ArrayList<Integer> studentGroups = new ArrayList<>();
     private ListView list;
     private DbInteractor dbInteractor;
 
@@ -34,22 +38,35 @@ public class StudentGroupsActivity extends AppCompatActivity {
         dbInteractor = new DbInteractor(this);
 
         studentName = getIntent().getStringExtra("studentFullName");
+        studentId = getIntent().getIntExtra("studentId", 0);
 
         studentFullName = (TextView) findViewById(R.id.studentFullName);
         studentFullName.setText(studentName);
 
         list = (ListView) findViewById(R.id.groupsList);
+        list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         this.fillTheList();
 
 
     }
 
     private void fillTheList() {
-        studentsGroups = dbInteractor.getGroups();
+        allGroups = dbInteractor.getGroups();
+        studentGroups = dbInteractor.getStudentGroups(studentId);
         setListItemListener();
-
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked, studentsGroups);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked, allGroups);
         list.setAdapter(adapter);
+
+        int i = 0;
+        for (Group group: allGroups) {
+            if (studentGroups.contains(group.get_id())) {
+                list.setItemChecked(i, true);
+            } else {
+                list.setItemChecked(i, false);
+            }
+            i++;
+        }
+
     }
 
     private void setListItemListener() {
@@ -58,7 +75,13 @@ public class StudentGroupsActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     final Group group = (Group) parent.getItemAtPosition(position);
-                    Toast.makeText(StudentGroupsActivity.this, group.toString(), Toast.LENGTH_SHORT).show();
+
+                    SparseBooleanArray checked = list.getCheckedItemPositions();
+                    if (checked.get(position)) {
+                        dbInteractor.insertRelationStudentGroup(studentId, group.get_id());
+                    } else {
+                        dbInteractor.deleteRelationStudentGroup(studentId, group.get_id());
+                    }
                 }
             }
         );

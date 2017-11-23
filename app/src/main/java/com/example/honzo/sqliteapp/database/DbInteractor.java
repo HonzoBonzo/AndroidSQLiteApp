@@ -19,6 +19,7 @@ public class DbInteractor {
 
     public static final String STUDENT_TABLE = "student";
     public static final String GROUP_TABLE = "grouptbl";
+    public static final String STUDENT_GROUP_TABLE = "student_group";
 
     public DbInteractor(Context context){
         this.context = context;
@@ -63,13 +64,14 @@ public class DbInteractor {
         String query = "SELECT * FROM " + GROUP_TABLE + ";";
 
         Cursor c = db.rawQuery(query, null);
-        c.moveToFirst();
 
-        do {
-            int id = c.getInt(c.getColumnIndex("grouptbl_id"));
-            String name = c.getString(c.getColumnIndex("grouptbl_name"));
-            groups.add(new Group(id, name));
-        } while (c.moveToNext());
+        if (c != null && c.moveToFirst()) {
+            do {
+                int id = c.getInt(c.getColumnIndex("grouptbl_id"));
+                String name = c.getString(c.getColumnIndex("grouptbl_name"));
+                groups.add(new Group(id, name));
+            } while (c.moveToNext());
+        }
 
         return groups;
     }
@@ -83,5 +85,32 @@ public class DbInteractor {
     public void deleteGroup(int groupId) {
         String query = "DELETE FROM " + GROUP_TABLE + " WHERE grouptbl_id = " + groupId + ";";
         db.execSQL(query);
+    }
+
+    public ArrayList<Integer> getStudentGroups(int studentId) {
+        ArrayList<Integer> groupsId = new ArrayList<>();
+        String query = "SELECT * FROM " + STUDENT_GROUP_TABLE + " WHERE sg_student_id = "+ studentId +";";
+
+        Cursor c = db.rawQuery(query, null);
+
+        if (c != null && c.moveToFirst()) {
+            do {
+                int id = c.getInt(c.getColumnIndex("sg_group_id"));
+                groupsId.add(id);
+            } while (c.moveToNext());
+        }
+
+        return groupsId;
+    }
+
+    public void insertRelationStudentGroup(int studentID, int groupId) {
+        ContentValues values = new ContentValues();
+        values.put("sg_student_id", studentID);
+        values.put("sg_group_id", groupId);
+        db.insert(STUDENT_GROUP_TABLE, null, values);
+    }
+
+    public void deleteRelationStudentGroup(int studentID, int groupId) {
+        db.delete(STUDENT_GROUP_TABLE, "sg_student_id = "+studentID+" AND sg_group_id = " + groupId + ";", null);
     }
 }

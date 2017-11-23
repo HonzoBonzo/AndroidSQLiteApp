@@ -60,20 +60,33 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         insertGroup("C 41");
         insertGroup("P 41");
         insertGroup("I 32");
+
+        insertRelationStudentGroup(1, 1);
+        insertRelationStudentGroup(1, 2);
+        insertRelationStudentGroup(1, 3);
+        insertRelationStudentGroup(2, 1);
+        insertRelationStudentGroup(2, 4);
     }
 
 
-    public void insertStudent(String studentName, String studentLastName) {
+    private void insertStudent(String studentName, String studentLastName) {
         ContentValues values = new ContentValues();
         values.put("student_name", studentName);
         values.put("student_lastName", studentLastName);
         db.insert(STUDENT_TABLE, null, values);
     }
 
-    public void insertGroup(String groupName) {
+    private void insertGroup(String groupName) {
         ContentValues values = new ContentValues();
         values.put("grouptbl_name", groupName);
         db.insert(GROUP_TABLE, null, values);
+    }
+
+    private void insertRelationStudentGroup(int studentID, int groupId) {
+        ContentValues values = new ContentValues();
+        values.put("sg_student_id", studentID);
+        values.put("sg_group_id", groupId);
+        db.insert(STUDENT_GROUP_TABLE, null, values);
     }
 
     @Override
