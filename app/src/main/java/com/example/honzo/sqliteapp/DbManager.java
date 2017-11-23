@@ -18,70 +18,41 @@ public class DbManager {
     public static final String GROUP_TABLE = "grouptbl";
     public static final String STUDENT_GROUP_TABLE = "student_group";
 
+    private StudentTable studentTable;
+    private GroupTable groupTable;
+
     public DbManager(Context context){
         this.context = context;
         SQLiteOpenHelper sqLiteOpenHelper = new MyOpenHelper(context);
         this.db = sqLiteOpenHelper.getWritableDatabase();
 
+        studentTable = new StudentTable(context);
+        groupTable = new GroupTable(context);
     }
 
 
     public ArrayList<Student> getStudents() {
-        ArrayList<Student> students = new ArrayList<>();
-        String query = "SELECT * FROM " + STUDENT_TABLE + ";";
-
-        Cursor c = db.rawQuery(query, null);
-        c.moveToFirst();
-
-        do {
-            int id = c.getInt(c.getColumnIndex("student_id"));
-            String name = c.getString(c.getColumnIndex("student_name"));
-            String lastName = c.getString(c.getColumnIndex("student_lastName"));
-
-            students.add(new Student(id, name, lastName));
-        } while (c.moveToNext());
-
-        return students;
+        return studentTable.getStudents();
     }
 
     public void insertStudent(String studentName, String studentLastName) {
-        ContentValues values = new ContentValues();
-        values.put("student_name", studentName);
-        values.put("student_lastName", studentLastName);
-        db.insert(STUDENT_TABLE, null, values);
+        studentTable.insertStudent(studentName, studentLastName);
     }
 
     public void deleteStudent(int studentId) {
-        String query = "DELETE FROM " + STUDENT_TABLE + " WHERE student_id = " + studentId + ";";
-        db.execSQL(query);
+        studentTable.deleteStudent(studentId);
     }
 
     public ArrayList<Group> getGroups() {
-        ArrayList<Group> groups = new ArrayList<>();
-        String query = "SELECT * FROM " + GROUP_TABLE + ";";
-
-        Cursor c = db.rawQuery(query, null);
-
-        if (c != null && c.moveToFirst()) {
-            do {
-                int id = c.getInt(c.getColumnIndex("grouptbl_id"));
-                String name = c.getString(c.getColumnIndex("grouptbl_name"));
-                groups.add(new Group(id, name));
-            } while (c.moveToNext());
-        }
-
-        return groups;
+        return groupTable.getGroups();
     }
 
     public void insertGroup(String groupName) {
-        ContentValues values = new ContentValues();
-        values.put("grouptbl_name", groupName);
-        db.insert(GROUP_TABLE, null, values);
+        groupTable.insertGroup(groupName);
     }
 
     public void deleteGroup(int groupId) {
-        String query = "DELETE FROM " + GROUP_TABLE + " WHERE grouptbl_id = " + groupId + ";";
-        db.execSQL(query);
+        groupTable.deleteGroup(groupId);
     }
 
     public ArrayList<Integer> getStudentGroups(int studentId) {
