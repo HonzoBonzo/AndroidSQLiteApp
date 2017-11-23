@@ -15,5 +15,7 @@
     <string name="do_you_want_to_remove_group">Do you want to remove group?</string>
     <string name="remove_group_confirm">Yes</string>
     <string name="new_group_warn_empty">Write group name</string>
+    <string name="edit_student_btn_label">Edit</string>
+    <string name="submit_student_edit">Submit</string>
 
 </resources>

@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class StudentGroupsActivity extends AppCompatActivity {
-    Student student;
-    String studentName;
+    String studentName, studentLastName;
     TextView studentFullName;
     int studentId;
     ArrayAdapter<Group> adapter;
@@ -33,7 +32,8 @@ public class StudentGroupsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_student_groups);
         dbManager = new DbManager(this);
 
-        studentName = getIntent().getStringExtra("studentFullName");
+        studentName = getIntent().getStringExtra("studentName");
+        studentLastName = getIntent().getStringExtra("studentLastName");
         studentId = getIntent().getIntExtra("studentId", 0);
 
         studentFullName = (TextView) findViewById(R.id.studentFullName);
@@ -131,6 +131,34 @@ public class StudentGroupsActivity extends AppCompatActivity {
                     dialog.dismiss();
                 } else {
                     Toast.makeText(StudentGroupsActivity.this, R.string.new_group_warn_empty, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        dialog.show();
+    }
+
+    public void openEditStudentDialog(View view) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(StudentGroupsActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_student_edit, null);
+        final EditText mName = mView.findViewById(R.id.student_name);
+        final EditText mLastname = mView.findViewById(R.id.student_lastname);
+        Button mAddBtn = mView.findViewById(R.id.submit_edit_student_button);
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+        mName.setText(studentName);
+        mLastname.setText(studentLastName);
+
+        mAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!Objects.equals(mName.getText().toString(), "") && !Objects.equals(mLastname.getText().toString(), "")) {
+                    dbManager.updateStudent(mName.getText().toString(), mLastname.getText().toString(), studentId);
+                    Toast.makeText(StudentGroupsActivity.this, "Student has been updated.", Toast.LENGTH_SHORT).show();
+                    studentFullName.setText(mName.getText().toString());
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(StudentGroupsActivity.this, R.string.student_data_not_full, Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -10,4 +10,5 @@ public interface IStudentDAO {
     ArrayList<Student> getStudents();
     void insertStudent(String studentName, String studentLastName);
     void deleteStudent(int studentId);
+    public void updateStudent(String studentName, String studentLastName, int studentId);
 }

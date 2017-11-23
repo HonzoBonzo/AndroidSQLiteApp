@@ -35,6 +35,10 @@ public class DbManager {
         studentTable.insertStudent(studentName, studentLastName);
     }
 
+    public void updateStudent(String studentName, String studentLastName, int studentId) {
+        studentTable.updateStudent(studentName, studentLastName, studentId);
+    }
+
     public void deleteStudent(int studentId) {
         studentTable.deleteStudent(studentId);
     }

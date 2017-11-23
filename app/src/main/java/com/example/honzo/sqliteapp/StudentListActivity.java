@@ -51,6 +51,8 @@ public class StudentListActivity extends AppCompatActivity {
                     Intent i = new Intent(StudentListActivity.this, StudentGroupsActivity.class);
                     i.putExtra("studentFullName", st.toString());
                     i.putExtra("studentId", st.get_id());
+                    i.putExtra("studentName", st.get_name());
+                    i.putExtra("studentLastName", st.get_lastName());
                     startActivity(i);
                 }
             }

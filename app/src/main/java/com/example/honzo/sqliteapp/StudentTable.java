@@ -51,6 +51,14 @@ public class StudentTable implements IStudentDAO {
     }
 
     @Override
+    public void updateStudent(String studentName, String studentLastName, int studentId) {
+        ContentValues values = new ContentValues();
+        values.put("student_name", studentName);
+        values.put("student_lastName", studentLastName);
+        db.update(STUDENT_TABLE, values, "student_id = " + studentId + ";", null);
+    }
+
+    @Override
     public void deleteStudent(int studentId) {
         String query = "DELETE FROM " + STUDENT_TABLE + " WHERE student_id = " + studentId + ";";
         db.execSQL(query);
