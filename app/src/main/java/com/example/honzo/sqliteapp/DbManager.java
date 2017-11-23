@@ -12,14 +12,9 @@ public class DbManager {
 
     private SQLiteDatabase db;
     private Context context;
-
-
-    public static final String STUDENT_TABLE = "student";
-    public static final String GROUP_TABLE = "grouptbl";
-    public static final String STUDENT_GROUP_TABLE = "student_group";
-
     private StudentTable studentTable;
     private GroupTable groupTable;
+    private StudentGroupTable studentGroupTable;
 
     public DbManager(Context context){
         this.context = context;
@@ -28,6 +23,7 @@ public class DbManager {
 
         studentTable = new StudentTable(context);
         groupTable = new GroupTable(context);
+        studentGroupTable = new StudentGroupTable(context);
     }
 
 
@@ -56,29 +52,14 @@ public class DbManager {
     }
 
     public ArrayList<Integer> getStudentGroups(int studentId) {
-        ArrayList<Integer> groupsId = new ArrayList<>();
-        String query = "SELECT * FROM " + STUDENT_GROUP_TABLE + " WHERE sg_student_id = "+ studentId +";";
-
-        Cursor c = db.rawQuery(query, null);
-
-        if (c != null && c.moveToFirst()) {
-            do {
-                int id = c.getInt(c.getColumnIndex("sg_group_id"));
-                groupsId.add(id);
-            } while (c.moveToNext());
-        }
-
-        return groupsId;
+        return studentGroupTable.getStudentGroups(studentId);
     }
 
     public void insertRelationStudentGroup(int studentID, int groupId) {
-        ContentValues values = new ContentValues();
-        values.put("sg_student_id", studentID);
-        values.put("sg_group_id", groupId);
-        db.insert(STUDENT_GROUP_TABLE, null, values);
+        studentGroupTable.insertRelationStudentGroup(studentID, groupId);
     }
 
     public void deleteRelationStudentGroup(int studentID, int groupId) {
-        db.delete(STUDENT_GROUP_TABLE, "sg_student_id = "+studentID+" AND sg_group_id = " + groupId + ";", null);
+        studentGroupTable.deleteRelationStudentGroup(studentID, groupId);
     }
 }
